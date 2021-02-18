@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {SignIn} from '../Screens';
+import {SignIn, SignUp} from '../Screens';
 
 const RootStack = createStackNavigator();
 
@@ -35,6 +35,7 @@ const RootStackScreen = ({navigation}) => {
   return (
     <RootStack.Navigator initialRouteName={routeName}>
       <RootStack.Screen name="SignIn" component={SignIn} options={{header: () => null}} />
+      <RootStack.Screen name="SignUp" component={SignUp} options={{header: () => null}} />
     </RootStack.Navigator>
   );
 };

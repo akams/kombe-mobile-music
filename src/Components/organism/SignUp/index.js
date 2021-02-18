@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, Platform, TouchableOpacity, TextInput} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
@@ -10,8 +11,19 @@ import theme from '../../../Theme';
 
 const {colors} = theme;
 
-function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
-  const {check_textInputChange, secureTextEntry, isValidUser, isValidPassword} = data;
+const matchPwd = (pwd, pwd2) => pwd === pwd2;
+
+function SignUpForm({setDataFunction, data, navigation, onSubmitFunction}) {
+  const {
+    check_textInputChange,
+    secureTextEntry,
+    confirm_secureTextEntry,
+    isValidUser,
+    isValidPassword,
+    isValidConfirmPassword,
+    password,
+    confirmPassword,
+  } = data;
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -61,10 +73,33 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
     }
   };
 
+  const handleConfirmPasswordChange = (val) => {
+    if (val.trim().length >= 4) {
+      setDataFunction({
+        ...data,
+        confirmPassword: val,
+        isValidConfirmPassword: true,
+      });
+    } else {
+      setDataFunction({
+        ...data,
+        confirmPassword: val,
+        isValidConfirmPassword: false,
+      });
+    }
+  };
+
   const updateSecureTextEntry = () => {
     setDataFunction({
       ...data,
       secureTextEntry: !data.secureTextEntry,
+    });
+  };
+
+  const confirmUpdateSecureTextEntry = () => {
+    setDataFunction({
+      ...data,
+      confirm_secureTextEntry: !data.confirm_secureTextEntry,
     });
   };
 
@@ -74,7 +109,7 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
       <View style={styles.action}>
         <Icon size={20} name="person-outline" color={isValidUser ? colors.darkblue : colors.red} />
         <TextInput
-          placeholder="Your Email"
+          placeholder="Your email"
           autoCapitalize="none"
           onChangeText={(val) => textInputChange(val)}
           onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
@@ -113,16 +148,42 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
         </Animatable.View>
       )}
 
+      <Text style={[styles.text_footer, styles.addMargin]}>Confirm Password</Text>
+      <View style={styles.action}>
+        <Icon size={20} name="lock-closed-outline" color={isValidConfirmPassword ? colors.darkblue : colors.red} />
+        <TextInput
+          onChangeText={(val) => handleConfirmPasswordChange(val)}
+          secureTextEntry={!!confirm_secureTextEntry}
+          placeholder="Confirm your password"
+          autoCapitalize="none"
+          style={styles.textInput}
+        />
+        <TouchableOpacity onPress={confirmUpdateSecureTextEntry}>
+          <Feather name={confirm_secureTextEntry ? 'eye-off' : 'eye'} color="grey" size={20} />
+        </TouchableOpacity>
+      </View>
+      {isValidConfirmPassword ? null : (
+        <Animatable.View animation="fadeInLeft" duration={500}>
+          <Text style={styles.errorMsg}>Password must be 4 characters long.</Text>
+        </Animatable.View>
+      )}
+
+      {matchPwd(password, confirmPassword) ? null : (
+        <Animatable.View animation="fadeInLeft" duration={500} style={styles.addSmallMargin}>
+          <Text style={styles.errorMsg}>Password not match with the confirmation password</Text>
+        </Animatable.View>
+      )}
+
       <View style={styles.button}>
         <Button
-          title="Sign In"
+          title="Sign Up"
           onPress={() => onSubmitFunction(data)}
           styleBtnContainer={[styles.signIn, styles.btnSignIn]}
-          styleBtnText={[styles.textSign, styles.textWhite]}
+          styleBtnText={[styles.textSign, styles.colorTxtWhite]}
         />
         <Button
-          title="Sign Up"
-          onPress={() => navigation.navigate('SignUp')}
+          title="Sign In"
+          onPress={() => navigation.goBack()}
           styleBtnContainer={[styles.signIn, styles.btnSignUp]}
           styleBtnText={[styles.textSign, styles.colorTxt]}
         />
@@ -135,6 +196,9 @@ const styles = StyleSheet.create({
   colorTxt: {
     color: colors.primary,
   },
+  colorTxtWhite: {
+    color: colors.white,
+  },
   btnSignIn: {
     backgroundColor: colors.primary,
     marginTop: 15,
@@ -146,6 +210,9 @@ const styles = StyleSheet.create({
   },
   addMargin: {
     marginTop: 35,
+  },
+  addSmallMargin: {
+    marginTop: 30,
   },
   textWhite: {
     color: colors.white,
@@ -181,7 +248,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    marginTop: 75,
+    marginTop: 40,
   },
   signIn: {
     width: '100%',
@@ -196,4 +263,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SigninForm;
+export default SignUpForm;
