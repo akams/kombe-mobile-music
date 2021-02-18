@@ -1,9 +1,12 @@
 import React, {useState, useContext} from 'react';
 import {StyleSheet, View, Text, StatusBar} from 'react-native';
 
+import {AuthContext} from '../Navigation/AuthProvider';
 import SignInForm from '../Components/organism/SignIn';
 
-import {AuthContext} from '../Navigation/AuthProvider';
+import theme from '../Theme';
+
+const {colors} = theme;
 
 function SignIn({navigation}) {
   const {login} = useContext(AuthContext);
@@ -23,7 +26,7 @@ function SignIn({navigation}) {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#009387" barStyle="light-content" />
+      <StatusBar backgroundColor={colors.primary} barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Bienvenue</Text>
       </View>
@@ -35,7 +38,7 @@ function SignIn({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#009387',
+    backgroundColor: colors.primary,
   },
   header: {
     flex: 1,
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   text_header: {
-    color: '#fff',
+    color: colors.white,
     fontWeight: 'bold',
     fontSize: 30,
   },
