@@ -1,11 +1,14 @@
 import React from 'react';
 import {StyleSheet, View, Text, Platform, TouchableOpacity, TextInput} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import * as Animatable from 'react-native-animatable';
 
 import Button from '../../atoms/Button';
+
+import theme from '../../../Theme';
+
+const {colors} = theme;
 
 function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
   const {check_textInputChange, secureTextEntry, isValidUser, isValidPassword} = data;
@@ -69,7 +72,7 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
     <Animatable.View animation="fadeInUpBig" style={styles.footer}>
       <Text style={styles.text_footer}>Email</Text>
       <View style={styles.action}>
-        <Icon size={20} name="person-outline" color="#05375a" />
+        <Icon size={20} name="person-outline" color={isValidUser ? colors.darkblue : colors.red} />
         <TextInput
           placeholder="Your Email"
           autoCapitalize="none"
@@ -92,7 +95,7 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
 
       <Text style={[styles.text_footer, styles.addMargin]}>Password</Text>
       <View style={styles.action}>
-        <Icon size={20} name="lock-closed-outline" color="#05375a" />
+        <Icon size={20} name="lock-closed-outline" color={secureTextEntry ? colors.darkblue : colors.red} />
         <TextInput
           onChangeText={(val) => handlePasswordChange(val)}
           secureTextEntry={!!secureTextEntry}
@@ -111,11 +114,12 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
       )}
 
       <View style={styles.button}>
-        <TouchableOpacity onPress={() => onSubmitFunction(data)} style={styles.signIn}>
-          <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
-            <Text style={[styles.textSign, styles.textWhite]}>Sign In</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+        <Button
+          title="Sign In"
+          onPress={() => onSubmitFunction(data)}
+          styleBtnContainer={[styles.signIn, styles.btnSignIn]}
+          styleBtnText={[styles.textSign, styles.textWhite]}
+        />
         <Button
           title="Sign Up"
           onPress={() => navigation.navigate('SignUp')}
@@ -129,10 +133,14 @@ function SigninForm({setDataFunction, data, navigation, onSubmitFunction}) {
 
 const styles = StyleSheet.create({
   colorTxt: {
-    color: '#009387',
+    color: colors.primary,
+  },
+  btnSignIn: {
+    backgroundColor: colors.primary,
+    marginTop: 15,
   },
   btnSignUp: {
-    borderColor: '#009387',
+    borderColor: colors.primary,
     borderWidth: 1,
     marginTop: 15,
   },
@@ -140,59 +148,47 @@ const styles = StyleSheet.create({
     marginTop: 35,
   },
   textWhite: {
-    color: '#fff',
+    color: colors.white,
   },
   footer: {
     flex: 3,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
-  text_header: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
   text_footer: {
-    color: '#05375a',
+    color: colors.primary,
     fontSize: 18,
   },
   action: {
     flexDirection: 'row',
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
-    paddingBottom: 5,
-  },
-  actionError: {
-    flexDirection: 'row',
-    marginTop: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#FF0000',
+    borderBottomColor: colors.ligthgrey,
     paddingBottom: 5,
   },
   textInput: {
     flex: 1,
     marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
-    color: '#05375a',
+    color: colors.primary,
   },
   errorMsg: {
-    color: '#FF0000',
+    color: colors.red,
     fontSize: 14,
   },
   button: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 75,
   },
   signIn: {
     width: '100%',
-    height: 50,
+    height: 75,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 50,
   },
   textSign: {
     fontSize: 18,
