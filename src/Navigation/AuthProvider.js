@@ -14,7 +14,7 @@ export const AuthProvider = ({children}) => {
         login: async (email, password) => {
           try {
             if (email.length === 0 || password.length === 0) {
-              Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [{text: 'Okay'}]);
+              Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [{text: 'Done'}]);
               return;
             }
             await auth().signInWithEmailAndPassword(email, password);
@@ -31,7 +31,7 @@ export const AuthProvider = ({children}) => {
                 errorMsg = 'The password is invalid or the user does not have a password.';
                 break;
             }
-            Alert.alert(error.code, errorMsg, [{text: 'Okay'}]);
+            Alert.alert(error.code, errorMsg, [{text: 'Done'}]);
           }
         },
         register: async (email, password) => {

@@ -5,6 +5,7 @@ import auth from '@react-native-firebase/auth';
 import {AuthContext} from '../Navigation/AuthProvider';
 
 import RootStackScreen from './RootStackScreen';
+import InAppStackScreen from './InAppStackScreen';
 
 const Routes = () => {
   const {user, setUser} = useContext(AuthContext);
@@ -28,11 +29,7 @@ const Routes = () => {
 
   console.log('user', user);
 
-  return (
-    <NavigationContainer>
-      <RootStackScreen />
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{user ? <InAppStackScreen /> : <RootStackScreen />}</NavigationContainer>;
 };
 
 export default Routes;
