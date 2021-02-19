@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { SIZES } from '../../../../constants/themes';
-import { COLORS } from '../../../../constants/colors';
+import theme from '../../../Theme';
 
-const Card = ({ itemData, onPress, mainContainerCard }) => (
+const {sizes, colors} = theme;
+
+const Card = ({itemData, onPress, mainContainerCard}) => (
   <TouchableOpacity onPress={onPress} style={mainContainerCard || styles.mainContainerCard}>
     <View style={styles.card}>
       <View style={styles.cardImgWrapper}>
@@ -34,8 +35,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 20,
   },
-  heartFull: { color: '#FF797A' },
-  heartEmpty: { color: '#fff' },
+  heartFull: {color: '#FF797A'},
+  heartEmpty: {color: '#fff'},
   heart: {
     position: 'absolute',
     top: 10,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     flexDirection: 'row',
     shadowColor: '#999',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
@@ -62,17 +63,17 @@ const styles = StyleSheet.create({
   cardImg: {
     width: '100%',
     height: '100%',
-    borderTopRightRadius: SIZES.radius,
-    borderTopLeftRadius: SIZES.radius,
+    borderTopRightRadius: sizes.radius,
+    borderTopLeftRadius: sizes.radius,
   },
   cardInfo: {
     position: 'absolute',
     bottom: -20,
     height: 50,
     width: '100%',
-    backgroundColor: COLORS.white,
-    borderBottomLeftRadius: SIZES.radius,
-    borderBottomRightRadius: SIZES.radius,
+    backgroundColor: colors.white,
+    borderBottomLeftRadius: sizes.radius,
+    borderBottomRightRadius: sizes.radius,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 2,

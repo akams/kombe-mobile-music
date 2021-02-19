@@ -1,14 +1,17 @@
 import React, {useEffect, useContext} from 'react';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
+
+import HomeOrganisms from '../Components/organism/Home';
 
 import theme from '../Theme';
 
 const {colors} = theme;
 
 function Home({navigation}) {
+  const user = {};
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Step One Home</Text>
+      <HomeOrganisms user={user} navigation={navigation} />
     </SafeAreaView>
   );
 }

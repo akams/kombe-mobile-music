@@ -1,8 +1,10 @@
 /* eslint-disable react/display-name */
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Home, Profil} from '../Screens';
 import theme from '../Theme';
@@ -15,10 +17,12 @@ const InAppTab = createBottomTabNavigator();
 const HomeStackScreen = ({navigation}) => (
   <InAppStack.Navigator
     screenOptions={{
+      headerShown: true,
       headerStyle: {
         backgroundColor: colors.white,
         // shadowColor: 'transparent', // border bottom
       },
+      headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
         color: colors.black,
@@ -36,7 +40,29 @@ const HomeStackScreen = ({navigation}) => (
 
 const ProfilStackScreen = ({navigation}) => (
   <InAppStack.Navigator>
-    <InAppStack.Screen name="Profil" component={Profil} />
+    <InAppStack.Screen
+      options={{
+        title: 'Profil',
+        headerLeft: () => (
+          <View style={styles.marginLeft}>
+            <Icon name="chevron-back" size={25} color={colors.black} onPress={() => navigation.goBack()} />
+          </View>
+        ),
+        headerRight: () => (
+          <View style={styles.marginRight}>
+            <MaterialCommunityIcons
+              name="account-edit"
+              size={25}
+              backgroundColor={colors.background}
+              color={colors.black}
+              onPress={() => navigation.navigate('EditProfile')}
+            />
+          </View>
+        ),
+      }}
+      name="Profil"
+      component={Profil}
+    />
   </InAppStack.Navigator>
 );
 
@@ -76,5 +102,10 @@ const InAppStackScreen = () => (
     />
   </InAppTab.Navigator>
 );
+
+const styles = StyleSheet.create({
+  marginLeft: {marginLeft: 10},
+  marginRight: {marginRight: 10},
+});
 
 export default InAppStackScreen;
